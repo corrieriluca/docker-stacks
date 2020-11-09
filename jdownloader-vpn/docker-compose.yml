@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  vpn:
+    image: bubuntux/nordvpn
+    network_mode: bridge        # Required
+    cap_add:
+      - NET_ADMIN               # Required
+      - SYS_MODULE              # Required for TECHNOLOGY=NordLynx
+    sysctls:
+      - net.ipv4.conf.all.rp_filter=2           # Required for NordLynx
+    devices:
+      - /dev/net/tun            # Required
+    environment:                # Review https://github.com/bubuntux/nordvpn#environment-variables
+      - USER=<EMAIL>
+      - "PASS=<PASSWORD>"
+      - CONNECT=United_States
+      - TECHNOLOGY=NordLynx
+      - NETWORK=192.168.0.0/24  # May change this depending your LAN
+    ports:
+      - 3129:3129
+    restart: unless-stopped
+
+  jdownloader:
+    image: jaymoulin/jdownloader
+    network_mode: service:vpn
+    user: 1000:100              # or change to appropriate UID/GID 
+    volumes:
+      - <PATH_TO_CONFIG>:/opt/JDownloader/cfg
+      - <PATH_TO_DOWNLOADS>:/opt/JDownloader/Downloads
+    environment:
+      MYJD_USER: EMAIL
+      MYJD_PASSWORD: PA$$WORD
+      MYJD_DEVICE_NAME: DEVICE_NAME
+    depends_on:
+      - vpn
+    restart: unless-stopped

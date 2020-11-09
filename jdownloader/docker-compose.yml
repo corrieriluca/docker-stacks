@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  jdownloader:
+    image: jaymoulin/jdownloader
+    user: 1000:100                    # or change to appropiate UID/GID
+    volumes:
+      - <PATH_TO_CONFIG>:/opt/JDownloader/cfg
+      - <PATH_TO_DOWNLOADS>:/opt/JDownloader/Downloads
+    environment:
+      MYJD_USER: EMAIL
+      MYJD_PASSWORD: PA$$WORD
+      MYJD_DEVICE_NAME: DEVICE_NAME
+    restart: unless-stopped
+    ports:
+      - 3129:3129

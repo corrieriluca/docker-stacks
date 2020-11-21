@@ -1,0 +1,25 @@
+version: '3.3'
+services:
+    transmission-openvpn:
+        volumes:
+            - '<PATH_TO_DOWNLOADS>:/data'
+        environment:
+            - PUID=1000
+            - PGID=100
+            - OPENVPN_PROVIDER=NORDVPN
+            - NORDVPN_COUNTRY=FR
+            - NORDVPN_CATEGORY=legacy_p2p
+            - NORDVPN_PROTOCOL=tcp
+            - OPENVPN_USERNAME=<EMAIL_ADDRESS>
+            - OPENVPN_PASSWORD=<PASSWORD>
+            - WEBPROXY_ENABLED=false
+            - LOCAL_NETWORK=192.168.0.0/24      # May change this depending your LAN
+        cap_add:
+            - NET_ADMIN
+        logging:
+            driver: json-file
+            options:
+                max-size: 10m
+        ports:
+            - '9091:9091'
+        image: haugene/transmission-openvpn

@@ -1,0 +1,19 @@
+version: '2'
+services:
+  plex:
+    container_name: plex
+    image: plexinc/pms-docker
+    restart: unless-stopped
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - TZ="Europe/Paris"
+      - PLEX_CLAIM="<TOKEN>"
+    network_mode: host
+    volumes:
+      - plex_conf:/config
+      - /dev/shm:/transcode
+      - <PATH_TO_MEDIA>:/data:ro
+volumes:
+  plex_conf:

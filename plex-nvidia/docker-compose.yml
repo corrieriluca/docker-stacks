@@ -9,11 +9,11 @@ services:
       - NVIDIA_VISIBLE_DEVICES=all
       - NVIDIA_DRIVER_CAPABILITIES=all
       - TZ="Europe/Paris"
-      - PLEX_CLAIM="<TOKEN>"
+      #- PLEX_CLAIM="<TOKEN>"
     network_mode: host
     volumes:
       - plex_conf:/config
       - /dev/shm:/transcode
-      - <PATH_TO_MEDIA>:/data:ro
+      #- <PATH_TO_MEDIA>:/data:ro
 volumes:
   plex_conf:

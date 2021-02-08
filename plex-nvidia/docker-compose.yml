@@ -12,8 +12,6 @@ services:
       #- PLEX_CLAIM="<TOKEN>"
     network_mode: host
     volumes:
-      - plex_conf:/config
+      #- <PATH_TO_CONF>:/config
       - /dev/shm:/transcode
       #- <PATH_TO_MEDIA>:/data:ro
-volumes:
-  plex_conf:
